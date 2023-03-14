@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebPortal</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'swfobject' %>
+  <%= csrf_meta_tags %>
+  <style>
+  body {
+background: url('http://hires.photospublic.com/PP31131112-Extreme-light-blue-sky.jpg') no-repeat center center;
+background-size: "100%";}
+  </style> 
+</head>
+<body>
+  <div class="container">
+    <%= nav_bar fixed: :top, brand: "Dnepr Acro Family" do %>
+        <%= menu_group do %>
+            <%= menu_item "Статьи", articles_path %>
+            <%= menu_item "Фото", photo_galleries_path %>
+            <%= menu_item "Видео", video_galleries_path %>
+            <%= menu_item "События", events_path %>
+            <%= menu_item "О нас", '/pages/about_us'%>
+            <%= menu_item "Контакты", '/pages/contacts'%>
+        <% end %>
+        <% if current_user %>
+          <%= menu_group do %>
+            <%= menu_item "Выход", destroy_user_session_path, :method => :delete  %>
+          <%end%>
+        <% else %>
+            <%= menu_group pull: :right do %>
+                <%= menu_item "Авторизация", new_user_session_path %>
+                <%= menu_item "Регистрация", new_user_registration_path %>
+            <% end %>
+      <% end %>
+    <% end %>
+    <div class="container">
+      <div class="row">
+        <div class="span9">
+          <%= yield %>  
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+- model_class = PhotoGallery
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:describtion)
+      %th= model_class.human_attribute_name(:created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @photo_galleries.each do |photo_gallery|
+      %tr
+        %td= link_to photo_gallery.id, photo_gallery_path(photo_gallery)
+        %td= link_to photo_gallery.name, photo_gallery_path(photo_gallery)
+        %td= photo_gallery.describtion
+        %td=l photo_gallery.created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_photo_gallery_path(photo_gallery), :class => 'btn btn-default btn-xs'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), photo_gallery_path(photo_gallery), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= will_paginate @photo_galleries
+= link_to t('.new', :default => t("helpers.links.new")), new_photo_gallery_path, :class => 'btn btn-primary'
